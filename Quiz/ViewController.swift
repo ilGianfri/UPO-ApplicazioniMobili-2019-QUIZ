@@ -62,6 +62,7 @@ class ViewController: UIViewController {
         
         questions = [que1, que2, que3, que4]
         current = 0
+        score = 0
         
         displayQuestion(quest: que1)
     }
@@ -103,7 +104,7 @@ class ViewController: UIViewController {
             {
                 //Correct answer
                 displayAnswerResult(answerCorrect: true)
-                score += 5
+                score += 1
                 playSound(correctAnswer: true)
             }
             else
@@ -118,7 +119,7 @@ class ViewController: UIViewController {
             let textAnswerCorrect = ((quizTextAnswer.text?.lowercased().contains(String(questions[current].textAnswer!)))!)
             displayAnswerResult(answerCorrect: textAnswerCorrect)
             playSound(correctAnswer: textAnswerCorrect)
-            score += 5
+            score += 1
         }
     }
     
