@@ -7,22 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4DAD477C24784962003AADF1 /* correct_answer.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4DAD477B24784962003AADF1 /* correct_answer.mp3 */; };
+		4DAD4780247849DC003AADF1 /* wrong_answer.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4DAD477F247849DC003AADF1 /* wrong_answer.mp3 */; };
 		4DED601F247579280094B443 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DED601E247579280094B443 /* AppDelegate.swift */; };
 		4DED6021247579280094B443 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DED6020247579280094B443 /* SceneDelegate.swift */; };
 		4DED6023247579280094B443 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DED6022247579280094B443 /* ViewController.swift */; };
 		4DED6026247579280094B443 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4DED6024247579280094B443 /* Main.storyboard */; };
-		4DED60282475792F0094B443 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DED60272475792F0094B443 /* Assets.xcassets */; };
 		4DED602B2475792F0094B443 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4DED60292475792F0094B443 /* LaunchScreen.storyboard */; };
 		4DED60332475BF1D0094B443 /* QuizQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DED60322475BF1D0094B443 /* QuizQuestion.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4DAD477B24784962003AADF1 /* correct_answer.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = correct_answer.mp3; sourceTree = "<group>"; };
+		4DAD477F247849DC003AADF1 /* wrong_answer.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = wrong_answer.mp3; sourceTree = "<group>"; };
 		4DED601B247579280094B443 /* Quiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quiz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DED601E247579280094B443 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4DED6020247579280094B443 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		4DED6022247579280094B443 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		4DED6025247579280094B443 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		4DED60272475792F0094B443 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4DED602A2475792F0094B443 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4DED602C2475792F0094B443 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4DED60322475BF1D0094B443 /* QuizQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizQuestion.swift; sourceTree = SOURCE_ROOT; };
@@ -58,12 +60,13 @@
 		4DED601D247579280094B443 /* Quiz */ = {
 			isa = PBXGroup;
 			children = (
+				4DAD477F247849DC003AADF1 /* wrong_answer.mp3 */,
+				4DAD477B24784962003AADF1 /* correct_answer.mp3 */,
 				4DED60322475BF1D0094B443 /* QuizQuestion.swift */,
 				4DED601E247579280094B443 /* AppDelegate.swift */,
 				4DED6020247579280094B443 /* SceneDelegate.swift */,
 				4DED6022247579280094B443 /* ViewController.swift */,
 				4DED6024247579280094B443 /* Main.storyboard */,
-				4DED60272475792F0094B443 /* Assets.xcassets */,
 				4DED60292475792F0094B443 /* LaunchScreen.storyboard */,
 				4DED602C2475792F0094B443 /* Info.plist */,
 			);
@@ -129,8 +132,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				4DED602B2475792F0094B443 /* LaunchScreen.storyboard in Resources */,
-				4DED60282475792F0094B443 /* Assets.xcassets in Resources */,
 				4DED6026247579280094B443 /* Main.storyboard in Resources */,
+				4DAD477C24784962003AADF1 /* correct_answer.mp3 in Resources */,
+				4DAD4780247849DC003AADF1 /* wrong_answer.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

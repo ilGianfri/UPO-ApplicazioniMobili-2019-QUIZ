@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ViewController: UIViewController {
     @IBOutlet weak var quizQuestion: UILabel!
@@ -18,6 +19,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var startGameButton: UIButton!
     @IBOutlet weak var quizTitle: UILabel!
     @IBOutlet weak var confirmTextButton: UIButton!
+    
+    var player: AVAudioPlayer?
     
     var questions = [Question]()
     var current : Int = 0
@@ -101,16 +104,20 @@ class ViewController: UIViewController {
                 //Correct answer
                 displayAnswerResult(answerCorrect: true)
                 score += 5
+                playSound(correctAnswer: true)
             }
             else
             {
                 //Wrong answer
                 displayAnswerResult(answerCorrect: false)
+                playSound(correctAnswer: false)
             }
         }
         else
         {
-            displayAnswerResult(answerCorrect: ((quizTextAnswer.text?.lowercased().contains(String(questions[current].textAnswer!)))!))
+            let textAnswerCorrect = ((quizTextAnswer.text?.lowercased().contains(String(questions[current].textAnswer!)))!)
+            displayAnswerResult(answerCorrect: textAnswerCorrect)
+            playSound(correctAnswer: textAnswerCorrect)
             score += 5
         }
     }
@@ -183,6 +190,25 @@ class ViewController: UIViewController {
     
     @IBAction func answer4Clicked(_ sender: Any) {
         verifyAnswer(answerIndex: 3)
+    }
+    
+    func playSound(correctAnswer : Bool)
+    {
+        guard let url = Bundle.main.url(forResource: correctAnswer ? "correct_answer" : "wrong_answer", withExtension: "mp3") else { return }
+
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+            try AVAudioSession.sharedInstance().setActive(true)
+
+            player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
+
+            guard let player = player else { return }
+
+            player.play()
+
+        } catch let error {
+            print(error.localizedDescription)
+        }
     }
 }
 
