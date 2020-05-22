@@ -12,11 +12,11 @@ struct Question
 {
     var questionText : String?
     var possibleAnswers : [String]?
-    var correctAnswerIndex : Int
+    var correctAnswerIndex : [Int]
     var isTextAnswer : Bool
-    var textAnswer : String?
+    var textAnswer : String?    
     
-    init(questionText : String, possibleAnswers : [String], correctAnswerIndex : Int, isTextAnswer : Bool, textAnswer : String?)
+    init(questionText : String, possibleAnswers : [String], correctAnswerIndex : [Int], isTextAnswer : Bool, textAnswer : String?)
     {
         self.questionText = questionText
         self.possibleAnswers = possibleAnswers
