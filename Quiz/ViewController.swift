@@ -37,6 +37,9 @@ class ViewController: UIViewController {
         confirmTextButton.isHidden = true
     }
     
+    /**
+     Function to hide/show all buttons
+     */
     func hideButtons(disp : Bool)
     {
         quizAnswer1.isHidden = disp
@@ -51,6 +54,9 @@ class ViewController: UIViewController {
         startQuiz()
     }
     
+    /**
+     Initializes the questions and starts the quiz
+     */
     func startQuiz()
     {
         let que1 = Question(questionText: "What's Batman real identity?", possibleAnswers: ["Bruce Waine", "Tom Jones", "David Hasselhoff", "Tony Stark"], correctAnswerIndex: [0], isTextAnswer: false, textAnswer: nil)
@@ -65,12 +71,18 @@ class ViewController: UIViewController {
         let que10 = Question(questionText: "Which of these is a game conference?", possibleAnswers: ["Microsoft Build", "Google I/O", "MVDC", "E3"], correctAnswerIndex: [3], isTextAnswer: false, textAnswer: nil)
         
         questions = [que1, que2, que3, que4, que5, que6, que7, que8, que9, que10]
+        //Orders the questions randomly
+        questions.shuffle()
+        
         current = 0
         score = 0
         
         displayQuestion(quest: questions[0])
     }
     
+    /**
+     Given a question, it populates the UI
+     */
     func displayQuestion(quest : Question)
     {
         reenableButtons()
@@ -103,6 +115,14 @@ class ViewController: UIViewController {
         quizQuestion.isHidden = false
     }
     
+    /**
+     Given the selected answer index, checks if the answer is correct.
+     
+     Points:
+     - 1 point for single answer questions
+     - 1 point for text answer questions
+     - 1 point for each correct multi answer question - 0 points if the first answer is wrong (goes to next question)
+     */
     func verifyAnswer(answerIndex : Int?)
     {
         if (!questions[current].isTextAnswer)
@@ -135,13 +155,15 @@ class ViewController: UIViewController {
         }
     }
     
+    /**
+     Shows the dialog with the result of the answer (correct/incorrect/more to answer)
+     */
     func displayAnswerResult(answerCorrect : Bool, moreAnswers: Bool, currentAnswerIndex : Int)
     {
         var description : String = ""
         
         if (!questions[current].isTextAnswer && moreAnswers && self.questions[self.current].correctAnswerIndex.count != self.currentAnswers.count)
         {
-            //correct = (questions[current].possibleAnswers?[questions[current].correctAnswerIndex])! + " is the correct answer"
             description = answerCorrect ? "Correct but there's more!" : "You'll do better with the next one"
         }
         else if (questions[current].isTextAnswer)
@@ -198,16 +220,18 @@ class ViewController: UIViewController {
                     }
                 }
               case .cancel:
-                    print("cancel")
-
+                    break
               case .destructive:
-                    print("destructive")
+                    break
               @unknown default:
-                    print("bo")
+                    break
             }}))
         self.present(alert, animated: true, completion: nil)
     }
     
+    /**
+     Handles the end of the game
+     */
     func gameEnd()
     {
         let alert = UIAlertController(title: "The end" , message: "Congrats! Your score is " + String(self.score) , preferredStyle: .alert)
@@ -224,12 +248,18 @@ class ViewController: UIViewController {
         self.startGameButton.isHidden = false
     }
     
+    /**
+     Goes to the next question
+     */
     func nextQuestion()
     {
         self.current += 1;
         self.displayQuestion(quest: self.questions[self.current])
     }
     
+    /**
+     Re-enables all the answer buttons
+     */
     func reenableButtons()
     {
          self.quizAnswer1.isEnabled = true
@@ -258,6 +288,9 @@ class ViewController: UIViewController {
         verifyAnswer(answerIndex: 3)
     }
     
+    /**
+     Plays a sound based on the answer correctness
+     */
     func playSound(correctAnswer : Bool)
     {
         guard let url = Bundle.main.url(forResource: correctAnswer ? "correct_answer" : "wrong_answer", withExtension: "mp3") else { return }
