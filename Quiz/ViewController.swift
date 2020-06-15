@@ -125,6 +125,7 @@ class ViewController: UIViewController {
      */
     func verifyAnswer(answerIndex : Int?)
     {
+        quizTextAnswer.isEnabled = false
         if (!questions[current].isTextAnswer)
         {
             if (questions[current].correctAnswerIndex.contains(answerIndex!))
@@ -153,6 +154,8 @@ class ViewController: UIViewController {
             playSound(correctAnswer: textAnswerCorrect)
             score += 1
         }
+        
+        quizTextAnswer.isEnabled = true
     }
     
     /**
