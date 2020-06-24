@@ -52,33 +52,33 @@
                                             <action selector="answer2Clicked:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="mMQ-fU-gIH"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uVO-iW-6C0">
-                                        <rect key="frame" x="100.5" y="320.5" width="55" height="30"/>
-                                        <state key="normal" title="Confirm"/>
-                                        <connections>
-                                            <action selector="confirmTextAnswerClicked:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="xLM-a9-coh"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0hb-jP-idz">
-                                        <rect key="frame" x="113" y="384.5" width="30" height="36"/>
+                                        <rect key="frame" x="113" y="320.5" width="30" height="36"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <connections>
                                             <action selector="answer3Clicked:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="Fzv-TN-TgY"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wm4-bf-TTl">
-                                        <rect key="frame" x="113" y="454.5" width="30" height="36"/>
+                                        <rect key="frame" x="113" y="390.5" width="30" height="36"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <connections>
                                             <action selector="answer4Clicked:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="JcL-LC-igT"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hWy-bL-ibx">
-                                        <rect key="frame" x="78.5" y="524.5" width="99" height="36"/>
+                                        <rect key="frame" x="78.5" y="460.5" width="99" height="36"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <state key="normal" title="Start Game"/>
                                         <connections>
                                             <action selector="startClick:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="dNK-Re-rMP"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uVO-iW-6C0">
+                                        <rect key="frame" x="100.5" y="530.5" width="55" height="30"/>
+                                        <state key="normal" title="Confirm"/>
+                                        <connections>
+                                            <action selector="confirmTextAnswerClicked:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="xLM-a9-coh"/>
                                         </connections>
                                     </button>
                                 </subviews>

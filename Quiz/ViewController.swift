@@ -59,16 +59,16 @@ class ViewController: UIViewController {
      */
     func startQuiz()
     {
-        let que1 = Question(questionText: "What's Batman real identity?", possibleAnswers: ["Bruce Waine", "Tom Jones", "David Hasselhoff", "Tony Stark"], correctAnswerIndex: [0], isTextAnswer: false, textAnswer: nil)
-        let que2 = Question(questionText: "Which actor has never played Spiderman?", possibleAnswers: ["Tom Holland", "George Clooney", "Andrew Garfield", "Tobey Maguire"], correctAnswerIndex: [1], isTextAnswer: false, textAnswer: nil)
-        let que3 = Question(questionText: "Which of these is not a real Apple product?", possibleAnswers: ["iMac", "Apple Watch", "iGlasses", "iPod"], correctAnswerIndex: [2], isTextAnswer: false, textAnswer: nil)
-        let que4 = Question(questionText: "What's 4+4*4?", possibleAnswers: [], correctAnswerIndex: [-1], isTextAnswer: true, textAnswer: "20")
-        let que5 = Question(questionText: "What version of Windows does not exist?", possibleAnswers: ["Windows 7", "Windows ME", "Windows XP SP2", "Windows XP SP4"], correctAnswerIndex: [3], isTextAnswer: false, textAnswer: nil)
-        let que6 = Question(questionText: "What does the 'P' in Android P stand for?", possibleAnswers: [], correctAnswerIndex: [-1], isTextAnswer: true, textAnswer: "Pie")
-        let que7 = Question(questionText: "Which one is not a real Samsung product?", possibleAnswers: ["Samsung Welt", "Samsung Tank", "Samsung SmartCube", "Samsung WindFree"], correctAnswerIndex: [2], isTextAnswer: false, textAnswer: nil)
-        let que8 = Question(questionText: "What is Twitch?", possibleAnswers: ["Game streaming platform", "Text editor", "IDE", "A company name"], correctAnswerIndex: [0], isTextAnswer: false, textAnswer: nil)
-        let que9 = Question(questionText: "Which of these brands does not exist?", possibleAnswers: ["Samsung", "F-link", "US Robotics", "Tronda"], correctAnswerIndex: [1,3], isTextAnswer: false, textAnswer: nil)
-        let que10 = Question(questionText: "Which of these is a game conference?", possibleAnswers: ["Microsoft Build", "Google I/O", "MVDC", "E3"], correctAnswerIndex: [3], isTextAnswer: false, textAnswer: nil)
+        let que1 = Question(questionText: "What's Batman real identity?", possibleAnswers: ["Bruce Waine", "Tom Jones", "David Hasselhoff", "Tony Stark"], correctAnswerIndex: [0], textAnswer: nil, type: QuestionType.Single)
+        let que2 = Question(questionText: "Which actor has never played Spiderman?", possibleAnswers: ["Tom Holland", "George Clooney", "Andrew Garfield", "Tobey Maguire"], correctAnswerIndex: [1], textAnswer: nil, type: QuestionType.Single)
+        let que3 = Question(questionText: "Which of these is not a real Apple product?", possibleAnswers: ["iMac", "Apple Watch", "iGlasses", "iPod"], correctAnswerIndex: [2], textAnswer: nil, type: QuestionType.Single)
+        let que4 = Question(questionText: "What's 4+4*4?", possibleAnswers: [], correctAnswerIndex: [-1], textAnswer: "20", type: QuestionType.Text)
+        let que5 = Question(questionText: "What version of Windows does not exist?", possibleAnswers: ["Windows 7", "Windows ME", "Windows XP SP2", "Windows XP SP4"], correctAnswerIndex: [3], textAnswer: nil, type: QuestionType.Single)
+        let que6 = Question(questionText: "What does the 'P' in Android P stand for?", possibleAnswers: [], correctAnswerIndex: [-1], textAnswer: "Pie", type: QuestionType.Text)
+        let que7 = Question(questionText: "Which one is not a real Samsung product?", possibleAnswers: ["Samsung Welt", "Samsung Tank", "Samsung SmartCube", "Samsung WindFree"], correctAnswerIndex: [2], textAnswer: nil, type: QuestionType.Single)
+        let que8 = Question(questionText: "What is Twitch?", possibleAnswers: ["Game streaming platform", "Text editor", "IDE", "A car brand"], correctAnswerIndex: [0], textAnswer: nil, type: QuestionType.Single)
+        let que9 = Question(questionText: "Which of these brands does not exist?", possibleAnswers: ["Samsung", "F-link", "US Robotics", "Tronda"], correctAnswerIndex: [1,3], textAnswer: nil, type: QuestionType.Multiple)
+        let que10 = Question(questionText: "Which of these is a game conference?", possibleAnswers: ["Microsoft Build", "Google I/O", "MVDC", "E3"], correctAnswerIndex: [3], textAnswer: nil, type: QuestionType.Single)
         
         questions = [que1, que2, que3, que4, que5, que6, que7, que8, que9, que10]
         //Orders the questions randomly
@@ -90,7 +90,7 @@ class ViewController: UIViewController {
         currentAnswers.removeAll()
         quizQuestion.text = quest.questionText
         
-        if (quest.possibleAnswers != nil && !quest.isTextAnswer)
+        if (quest.type == QuestionType.Single || quest.type == QuestionType.Multiple)
         {
             let txt1 = quest.possibleAnswers?[0]
             let txt2 = quest.possibleAnswers?[1]
@@ -106,13 +106,18 @@ class ViewController: UIViewController {
 
             hideButtons(disp : false)
         }
-        else
+        else //Text answer
         {
             hideButtons(disp : true)
             quizTextAnswer.isHidden = false
             confirmTextButton.isHidden = false
         }
         quizQuestion.isHidden = false
+        
+        if (quest.type == QuestionType.Multiple)
+        {
+            confirmTextButton.isHidden = false
+        }
     }
     
     /**
@@ -121,12 +126,13 @@ class ViewController: UIViewController {
      Points:
      - 1 point for single answer questions
      - 1 point for text answer questions
-     - 1 point for each correct multi answer question - 0 points if the first answer is wrong (goes to next question)
+     - 1 point if all answers are correct in multiple answers questions
      */
     func verifyAnswer(answerIndex : Int?)
     {
         quizTextAnswer.isEnabled = false
-        if (!questions[current].isTextAnswer)
+        
+        if (questions[current].type == QuestionType.Single)
         {
             if (questions[current].correctAnswerIndex.contains(answerIndex!))
             {
@@ -136,21 +142,53 @@ class ViewController: UIViewController {
                 }
                 
                 //Correct answer
-                displayAnswerResult(answerCorrect: true, moreAnswers: (questions[current].correctAnswerIndex.count > 1), currentAnswerIndex: answerIndex!)
+                displayAnswerResult(answerCorrect: true, currentAnswerIndex: answerIndex!)
                 score += 1
                 playSound(correctAnswer: true)
             }
             else
             {
                 //Wrong answer
-                displayAnswerResult(answerCorrect: false, moreAnswers: (questions[current].correctAnswerIndex.count > 1), currentAnswerIndex: answerIndex!)
+                displayAnswerResult(answerCorrect: false, currentAnswerIndex: answerIndex!)
                 playSound(correctAnswer: false)
             }
         }
-        else
+        //Multiple answers
+        else if (questions[current].type == QuestionType.Multiple)
+        {
+            switch answerIndex
+            {
+                case 0:
+                    quizAnswer1.tintColor = currentAnswers.contains(answerIndex!) ? self.view.tintColor : UIColor.darkGray
+                    break
+                case 1:
+                    quizAnswer2.tintColor = currentAnswers.contains(answerIndex!) ? self.view.tintColor : UIColor.darkGray
+                    break
+                case 2:
+                    quizAnswer3.tintColor = currentAnswers.contains(answerIndex!) ? self.view.tintColor : UIColor.darkGray
+                    break
+                case 3:
+                    quizAnswer4.tintColor = currentAnswers.contains(answerIndex!) ? self.view.tintColor : UIColor.darkGray
+                    break
+                default:
+                    break
+            }
+            
+            if (!currentAnswers.contains(answerIndex!))
+            {
+                currentAnswers.append(answerIndex!)
+            }
+            else
+            {
+                let toremove = currentAnswers.firstIndex{ $0 == answerIndex!}
+                currentAnswers.remove(at: toremove!)
+            }
+        }
+        //Text answer
+        else if (questions[current].type == QuestionType.Text)
         {
             let textAnswerCorrect = ((quizTextAnswer.text?.lowercased().contains(String(questions[current].textAnswer!.lowercased())))!)
-            displayAnswerResult(answerCorrect: textAnswerCorrect, moreAnswers: false, currentAnswerIndex: -1)
+            displayAnswerResult(answerCorrect: textAnswerCorrect, currentAnswerIndex: -1)
             playSound(correctAnswer: textAnswerCorrect)
             score += 1
         }
@@ -159,17 +197,13 @@ class ViewController: UIViewController {
     }
     
     /**
-     Shows the dialog with the result of the answer (correct/incorrect/more to answer)
+     Shows the dialog with the result of the answer (correct/incorrect)
      */
-    func displayAnswerResult(answerCorrect : Bool, moreAnswers: Bool, currentAnswerIndex : Int)
+    func displayAnswerResult(answerCorrect : Bool, currentAnswerIndex : Int)
     {
         var description : String = ""
         
-        if (!questions[current].isTextAnswer && moreAnswers && self.questions[self.current].correctAnswerIndex.count != self.currentAnswers.count)
-        {
-            description = answerCorrect ? "Correct but there's more!" : "You'll do better with the next one"
-        }
-        else if (questions[current].isTextAnswer)
+        if (questions[current].type == QuestionType.Text)
         {
             description = (questions[current].textAnswer)! + " is the correct answer"
         }
@@ -183,36 +217,7 @@ class ViewController: UIViewController {
               switch action.style{
               case .default:
                 
-                if (answerCorrect)
-                {
-                    //Has more than a single answer and all answers have not been given
-                    if (moreAnswers && self.questions[self.current].correctAnswerIndex.count != self.currentAnswers.count)
-                    {
-                        switch currentAnswerIndex
-                        {
-                            case 0: self.quizAnswer1.isEnabled = false
-                            case 1: self.quizAnswer2.isEnabled = false
-                            case 2: self.quizAnswer3.isEnabled = false
-                            case 3: self.quizAnswer4.isEnabled = false
-                            default:
-                                self.nextQuestion()
-                        }
-                    }
-                    else
-                    {
-                        //There's more questions
-                        if (self.current < self.questions.count - 1)
-                        {
-                            self.nextQuestion()
-                        }
-                        else
-                        {
-                            self.gameEnd()
-                        }
-                    }
-                }
-                else
-                {
+                    //There's more questions
                     if (self.current < self.questions.count - 1)
                     {
                         self.nextQuestion()
@@ -221,7 +226,6 @@ class ViewController: UIViewController {
                     {
                         self.gameEnd()
                     }
-                }
               case .cancel:
                     break
               case .destructive:
@@ -265,15 +269,44 @@ class ViewController: UIViewController {
      */
     func reenableButtons()
     {
-         self.quizAnswer1.isEnabled = true
-         self.quizAnswer2.isEnabled = true
-         self.quizAnswer3.isEnabled = true
-         self.quizAnswer4.isEnabled = true
+        self.quizAnswer1.isEnabled = true
+        self.quizAnswer2.isEnabled = true
+        self.quizAnswer3.isEnabled = true
+        self.quizAnswer4.isEnabled = true
+        
+        quizAnswer1.tintColor = self.view.tintColor
+        quizAnswer2.tintColor = self.view.tintColor
+        quizAnswer3.tintColor = self.view.tintColor
+        quizAnswer4.tintColor = self.view.tintColor
     }
     
     @IBAction func confirmTextAnswerClicked(_ sender: Any)
     {
-        verifyAnswer(answerIndex: nil)
+        if (questions[current].type == QuestionType.Text)
+        {
+            verifyAnswer(answerIndex: nil)
+        }
+        else
+        {
+            if (questions[current].correctAnswerIndex.count == currentAnswers.count)
+            {
+                if (questions[current].correctAnswerIndex.sorted() == currentAnswers.sorted())
+                {
+                    //Correct
+                    displayAnswerResult(answerCorrect: true, currentAnswerIndex: current)
+                    score += 1
+                }
+                else
+                {
+                    //Wrong answer
+                    displayAnswerResult(answerCorrect: false, currentAnswerIndex: current)
+                }
+            }
+            else //Too many/few answers
+            {
+                displayAnswerResult(answerCorrect: false, currentAnswerIndex: current)
+            }
+        }
     }
     @IBAction func answer1Clicked(_ sender: Any) {
         verifyAnswer(answerIndex: 0)

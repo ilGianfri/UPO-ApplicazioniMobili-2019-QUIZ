@@ -13,18 +13,22 @@ struct Question
     var questionText : String?
     var possibleAnswers : [String]?
     var correctAnswerIndex : [Int]
-    var isTextAnswer : Bool
-    var textAnswer : String?    
+    var textAnswer : String?
+    var type : QuestionType
     
-    init(questionText : String, possibleAnswers : [String], correctAnswerIndex : [Int], isTextAnswer : Bool, textAnswer : String?)
+    init(questionText : String, possibleAnswers : [String], correctAnswerIndex : [Int], textAnswer : String?, type : QuestionType)
     {
         self.questionText = questionText
         self.possibleAnswers = possibleAnswers
         self.correctAnswerIndex = correctAnswerIndex
-        self.isTextAnswer = isTextAnswer
+        self.type = type
         self.textAnswer = textAnswer
     }
 }
 
-
-
+enum QuestionType
+{
+    case Single
+    case Multiple
+    case Text
+}
